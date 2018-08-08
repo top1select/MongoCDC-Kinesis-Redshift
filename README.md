@@ -1,2 +1,2 @@
-# KinesisCDC
-Kinesis Change Data Capture(CDC) from MongoDB to Redshift
+# Mongo CDC to Redshift by Kinesis
+Change Data Capture(CDC) for MongoDB to Redshift using Kinesis.
