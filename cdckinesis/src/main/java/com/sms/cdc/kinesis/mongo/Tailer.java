@@ -150,6 +150,9 @@ public class Tailer implements Runnable, AutoCloseable, Cloneable {
         try {
             final Document query = new Document(FIELD_TIMESTAMP, new Document("$gt", startTime));
             final FindIterable<Document> cursor = collection.find(query).cursorType(CursorType.Tailable);
+            // Consumers are functional interfaces don't have any semantics meaning. Instead,
+            // they're interfaces that merely represent the structure of a function
+            // the meaning only comes from the context in which they're used.
             final Consumer<Document> consumer = doc -> {
                 // filter null oplogs
                 if (doc.get("ns") != null && StringUtils.isNotEmpty(doc.get("ns").toString())) {
