@@ -43,7 +43,7 @@ public class UpdateParser extends OplogParser {
 
         String idValue = getId(oplog);
 
-        PGUpdateStatement updateStatement = new PGUpdateStatement();
+        PGUpdateStatement updateStmt = new PGUpdateStatement();
 
         Map<String, Object> $set = getSetMap(oplog);
 
@@ -75,6 +75,10 @@ public class UpdateParser extends OplogParser {
         whereExpr.setDbType(JdbcConstants.POSTGRESQL);
 
         updateStmt.setWhere(whereExpr);
+        updateStmt.setTableSource(new SQLExprTableSource(new SQLPropertyExpr(nsArr[0], nsArr[1])));
+        updateStmt.setDbType(JdbcConstants.POSTGRESQL);
+
+        return SQLUtils.toPGString(updateStmt, Utils.formatOption());
 
 
     }
@@ -119,7 +123,6 @@ public class UpdateParser extends OplogParser {
             return Utils.subString65535(JSON.toJSONString(map));
         }
         else {
-            // 存在日期，进行格式化
             if (map.containsKey("$date")) {
                 Object $date = map.get("$date");
                 if ($date instanceof Long) {

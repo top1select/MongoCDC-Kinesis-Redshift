@@ -13,6 +13,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import scala.tools.cmd.Opt;
 
 import java.util.Arrays;
 import java.util.List;
@@ -109,4 +110,58 @@ public class Utils {
                 return new RedshiftDataType(mysqlDataType);
         }
     }
+
+    public static SQLUtils.FormatOption formatOption() {
+        final SQLUtils.FormatOption option = new SQLUtils.FormatOption();
+        option.setPrettyFormat(false);
+        return option;
+    }
+
+    public static SQLColumnDefinition createSqlColumnDefinition(SQLName name, SQLDataTypeImpl cloneDataType) {
+        final SQLColumnDefinition def = new SQLColumnDefinition();
+        def.setDbType(JdbcConstants.POSTGRESQL);
+        def.setName(name);
+        if (name instanceof SQLIdentifierExpr) {
+            final SQLIdentifierExpr nameExpr = (SQLIdentifierExpr) name;
+            final String newName = nameStringProcess(nameExpr.getName());
+            nameExpr.setName(newName);
+            def.setName(nameExpr);
+        }
+        def.setDataType(cloneDataType);
+        return def;
+    }
+
+
+    private static String nameStringProcess(String nameStr) {
+
+        if (nameStr.contains("`")) {
+            return nameStr.replaceAll("`", "\"");
+        }
+
+        if (REDSHIFT_KEYWORDS.contains(nameStr.toUpperCase())) {
+            return "\"" + nameStr + "\"";
+        }
+
+        return nameStr;
+    }
+
+    public static String formatDate(String lng) {
+        return new DateTime(Long.parseLong(lng)).withZone(zoneUTC).toString(fmt);
+    }
+
+    public static String formatDate(Long lng) {
+        return new DateTime(lng).withZone(zoneUTC).toString(fmt);
+    }
+
+    public static String formatDate(java.util.Date date) {
+        return new DateTime(date).withZone(zoneUTC).toString(fmt);
+    }
+
+    public static String subString65535(String value) {
+        return Optional.ofNullable(value)
+                .filter(x -> x.length() > 16838)
+                .map(x -> x.substring(0, 16379) + "...")
+                .orElse(value);
+    }
+
 }
