@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>KinesisCDC</artifactId>
+        <artifactId>mongocdc</artifactId>
         <groupId>com.sms.cdc</groupId>
-        <version>1.0</version>
+        <version>2.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cdc-kinesis</artifactId>
+    <artifactId>cdckinesis</artifactId>
     <repositories>
         <!-- <repository>
              <id>redshift</id>
@@ -50,17 +50,17 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>com.sms.bigdata</groupId>
-            <artifactId>seagull-commons</artifactId>
-            <version>${seagull.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>log4j</artifactId>
-                    <groupId>log4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.sms.bigdata</groupId>-->
+            <!--<artifactId>seagull-commons</artifactId>-->
+            <!--<version>${seagull.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<artifactId>log4j</artifactId>-->
+                    <!--<groupId>log4j</groupId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
         <!--  <dependency>
               <groupId>com.amazonaws</groupId>
               <artifactId>amazon-kinesis-client</artifactId>
@@ -100,16 +100,16 @@
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.sms.cdc</groupId>
-            <artifactId>cdc-parser</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>logback-classic</artifactId>
-                    <groupId>ch.qos.logback</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.sms.cdc</groupId>-->
+            <!--<artifactId>cdc-parser</artifactId>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<artifactId>logback-classic</artifactId>-->
+                    <!--<groupId>ch.qos.logback</groupId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
@@ -153,6 +153,11 @@
             <artifactId>aws-java-sdk-core</artifactId>
             <version>1.11.319</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-kinesis</artifactId>
+            <version>1.11.28</version>
         </dependency>
     </dependencies>
 
